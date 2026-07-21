@@ -116,3 +116,24 @@ def consultancy_obscured(n: int = 60):
 @task
 def debate_obscured(n: int = 60):
     return _task(debate(JUDGE, DEBATER, JudgeAccess.OBSCURED), n)
+
+
+# ---- Positive control, corrected: judge has no source ----------------------
+# Kenton et al. create the need for debate through information asymmetry: the
+# judge does not see the passage, the debaters do. With a sighted judge there is
+# nothing for debate to add, which is what our first control run showed.
+
+
+@task
+def direct_none(n: int = 60):
+    return _task(direct_judging(JUDGE, JudgeAccess.NONE), n)
+
+
+@task
+def consultancy_none(n: int = 60):
+    return _task(consultancy(JUDGE, DEBATER, JudgeAccess.NONE), n)
+
+
+@task
+def debate_none(n: int = 60):
+    return _task(debate(JUDGE, DEBATER, JudgeAccess.NONE), n)
