@@ -1,0 +1,22 @@
+[project]
+name = "unkad-oversight"
+version = "0.1.0"
+description = "Scalable oversight protocols with judge access to the object level as a parameter"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+dependencies = [
+    "inspect-ai>=0.3.100",
+    "openai>=1.0",
+    "datasets>=2.0",
+]
+
+[project.urls]
+Homepage = "https://unkad.com"
+Repository = "https://github.com/unkadlabs/unkad-oversight"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["oversight*"]
