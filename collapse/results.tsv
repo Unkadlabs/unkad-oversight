@@ -1,0 +1,13 @@
+judge	cell	n	yes_rate	yes_stderr	accuracy	balanced	unparsed
+ollama/qwen2.5:3b	absent_neutral	300	0.2733	0.0257	0.5833	0.6441	0.0000
+ollama/qwen2.5:3b	absent_warned	300	0.1933	0.0228	0.5433	0.6215	0.0000
+ollama/qwen2.5:3b	cipher_neutral	300	0.0433	0.0118	0.4200	0.5281	0.0000
+ollama/qwen2.5:3b	cipher_warned	300	0.0600	0.0137	0.4367	0.5416	0.0000
+ollama/qwen2.5:3b	e1_none	300	0.2200	0.0239	0.5433	0.6149	0.0000
+ollama/qwen2.5:3b	e1_obscured	300	0.0600	0.0137	0.4433	0.5486	0.0000
+ollama/qwen2.5:7b	absent_neutral	300	0.2567	0.0252	0.5800	0.6447	0.0000
+ollama/qwen2.5:7b	absent_warned	300	0.2133	0.0237	0.5500	0.6236	0.0000
+ollama/qwen2.5:7b	cipher_neutral	300	0.0433	0.0118	0.4267	0.5351	0.0000
+ollama/qwen2.5:7b	cipher_warned	300	0.0533	0.0130	0.4300	0.5362	0.0000
+ollama/qwen2.5:7b	e1_none	300	0.1933	0.0228	0.5100	0.5863	0.0000
+ollama/qwen2.5:7b	e1_obscured	300	0.0567	0.0133	0.4333	0.5389	0.0000

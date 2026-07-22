@@ -10,6 +10,9 @@ dependencies = [
     "datasets>=2.0",
 ]
 
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
 [project.urls]
 Homepage = "https://unkad.com"
 Repository = "https://github.com/Unkadlabs/unkad-oversight"
@@ -19,4 +22,4 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["oversight*"]
+include = ["oversight*", "collapse*"]

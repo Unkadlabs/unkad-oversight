@@ -19,12 +19,13 @@ research laboratory in Mogadishu.
 > a task that is YES 62 percent of the time, and so scoring 1.000 on the
 > reject-correct half of the data.
 >
-> **Follow-up.** We later found a confound in that rejection result: our OBSCURED
-> condition both showed ciphertext and warned the judge it could not verify
-> quotations, so either could have caused the collapse. We tested the
-> dissociation in [unkad-collapse](https://github.com/Unkadlabs/unkad-collapse).
-> The ciphertext causes it (z = -7.7); the warning does not (p = 0.57). The
-> finding stands. See PAPER.md section 6.2.
+> **Experiment 2, in [`collapse/`](collapse/).** We later found a confound in that
+> rejection result: our OBSCURED condition both showed ciphertext and warned the
+> judge it could not verify quotations, so either could have caused the collapse.
+> A matched 2x2 settles it. The ciphertext causes it (z = -7.7); the warning does
+> not (p = 0.57), replicated on two judges, with anchor cells reproducing this
+> paper's numbers almost exactly. See [`collapse/RESULTS.md`](collapse/RESULTS.md)
+> and [`collapse/PREREGISTRATION.md`](collapse/PREREGISTRATION.md).
 
 ## The question
 

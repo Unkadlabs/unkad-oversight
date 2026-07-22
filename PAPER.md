@@ -354,8 +354,7 @@ shown. Either the ciphertext or the warning could produce the collapse, and
 nothing in this paper separates them. Had the warning been responsible, the
 finding above would have been a demand characteristic of our own prompt.
 
-We ran the dissociation:
-[Unkadlabs/unkad-collapse](https://github.com/Unkadlabs/unkad-collapse). A matched
+We ran the dissociation, in [`collapse/`](collapse/). A matched
 2x2 crossing ciphertext against warning, n = 300 per cell, two judges, with anchor
 cells reproducing this paper's prompts verbatim.
 
