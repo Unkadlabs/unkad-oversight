@@ -367,8 +367,23 @@ whatever about verification, and it answers YES 4.3 percent of the time.
 The anchors reproduce this paper closely: `e1_none` returned 0.193 against the
 0.193 reported here, and `e1_obscured` returned 0.057 and 0.060 against 0.063.
 
-The finding in this section therefore survives its strongest objection. We record
-the confound rather than quietly benefiting from having resolved it, because the
+Experiment 2 tested direct judging only, so we then ran the same contrast for the
+other two protocols, with experiment 1's wording re-run alongside so the
+comparison is within-run rather than across sessions. The framing effect is null
+in all three:
+
+| protocol | neutral framing | original wording | effect | p |
+|---|---|---|---|---|
+| direct | 0.043 | 0.053 | +0.010 | 0.57 |
+| consultancy | 0.140 | 0.133 | +0.007 | 0.81 |
+| debate | 0.303 | 0.287 | +0.017 | 0.65 |
+
+The re-run cells reproduce this paper closely: consultancy 0.133 against the 0.130
+reported here, debate 0.287 against 0.290.
+
+The finding in this section therefore survives its strongest objection, and the
+carry-over to other protocols is measured rather than argued. We record the
+confound rather than quietly benefiting from having resolved it, because the
 version of this paper you may have read first did not know about it.
 
 ### 6.3 Consultancy degrades a sighted judge

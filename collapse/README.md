@@ -96,6 +96,29 @@ Anchors reproduced experiment 1 closely, including exactly on `e1_none`:
 
 Unparsed rate was 0.000 in all 12 cells.
 
+## Carry-over: does this hold beyond direct judging?
+
+The 2x2 above tests direct judging only. Experiment 1's debate and consultancy
+cells under OBSCURED still carried the original wording, so the claim that
+framing does not matter for them was an argument from the judge prompt being
+built identically across protocols, not a measurement.
+
+Four more cells make it a measurement, with experiment 1's wording re-run
+alongside so the comparison is within-run:
+
+| protocol | neutral | original wording | effect | p |
+|---|---|---|---|---|
+| direct | 0.043 | 0.053 | +0.010 | 0.57 |
+| consultancy | 0.140 | 0.133 | +0.007 | 0.81 |
+| debate | 0.303 | 0.287 | +0.017 | 0.65 |
+
+Null in all three. The re-run cells reproduce experiment 1 closely: consultancy
+0.133 against 0.130, debate 0.287 against 0.290.
+
+```bash
+./.venv/bin/python -m collapse.analyse --carryover --logs collapse/transcripts-carryover
+```
+
 ## What this does and does not settle
 
 **It does** mean experiment 1's rejection finding is a property of illegible

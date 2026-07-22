@@ -24,8 +24,10 @@ research laboratory in Mogadishu.
 > judge it could not verify quotations, so either could have caused the collapse.
 > A matched 2x2 settles it. The ciphertext causes it (z = -7.7); the warning does
 > not (p = 0.57), replicated on two judges, with anchor cells reproducing this
-> paper's numbers almost exactly. See [`collapse/RESULTS.md`](collapse/RESULTS.md)
-> and [`collapse/PREREGISTRATION.md`](collapse/PREREGISTRATION.md).
+> paper's numbers almost exactly. A further four cells confirm the framing effect
+> is null for consultancy and debate too, so the carry-over is measured rather
+> than assumed. See [`collapse/RESULTS.md`](collapse/RESULTS.md) and
+> [`collapse/PREREGISTRATION.md`](collapse/PREREGISTRATION.md).
 
 ## The question
 

@@ -126,7 +126,13 @@ def holm(pvalues: list[float], alpha: float = 0.05) -> list[bool]:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--logs", default="logs", help="directory of .eval logs")
+    ap.add_argument("--carryover", action="store_true",
+                    help="analyse the framing carry-over cells instead of the 2x2")
     args = ap.parse_args()
+
+    if args.carryover:
+        carryover(Path(args.logs))
+        return
 
     directory = Path(args.logs)
     if not directory.is_dir():
@@ -184,6 +190,50 @@ def main() -> None:
             cell = get(c)
             print(f"| {c} | {cell.yes_rate:.3f} | {cell.accuracy:.3f} "
                   f"| {cell.balanced:.3f} | {cell.unparsed_rate:.3f} |")
+
+
+
+
+# ---- Framing carry-over beyond direct judging ------------------------------
+
+CARRYOVER = [
+    ("consultancy", "consultancy_cipher_neutral", "consultancy_cipher_warned"),
+    ("debate", "debate_cipher_neutral", "debate_cipher_warned"),
+]
+
+# Experiment 1's OBSCURED YES rates for the same protocols, for the within-run
+# reproduction check.
+E1_OBSCURED_YES = {"consultancy": 0.130, "debate": 0.290}
+
+
+def carryover(directory: Path) -> None:
+    """Does the 2x2 framing result hold for consultancy and debate?
+
+    Experiment 2 tested direct judging only. Without this, the claim that
+    framing does not matter for the other protocols is an argument from the
+    judge prompt being built identically, not a measurement.
+    """
+    cells = load(directory)
+    by_task = {task: cell for (_model, task), cell in cells.items()}
+    print(f"\n# Framing carry-over, from {len(cells)} cells in {directory}/\n")
+    print("| protocol | neutral | warned | effect | z | p |")
+    print("|---|---|---|---|---|---|")
+    for name, neutral, warned in CARRYOVER:
+        if neutral not in by_task or warned not in by_task:
+            continue
+        diff, z, p = compare(by_task[neutral], by_task[warned])
+        print(f"| {name} | {by_task[neutral].yes_rate:.3f} "
+              f"| {by_task[warned].yes_rate:.3f} | {diff:+.3f} | {z:.2f} | {p:.3f} |")
+
+    print("\nWithin-run reproduction of experiment 1's OBSCURED cells:\n")
+    print("| protocol | this run | experiment 1 | difference |")
+    print("|---|---|---|---|")
+    for name, _neutral, warned in CARRYOVER:
+        if warned not in by_task:
+            continue
+        got = by_task[warned].yes_rate
+        pub = E1_OBSCURED_YES[name]
+        print(f"| {name} | {got:.3f} | {pub:.3f} | {got - pub:+.3f} |")
 
 
 if __name__ == "__main__":
