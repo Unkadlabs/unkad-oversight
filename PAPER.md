@@ -73,8 +73,9 @@ languages.
 3. A pre-registered hypothesis that failed, reported as failed (H3).
 4. An exploratory finding: illegible evidence induces **systematic rejection**
    rather than uncertainty, and this is invisible to aggregate accuracy.
-5. A validated fabrication detector, with the negative result that naive dishonest
-   debaters do not exploit a judge they have not been told is blind.
+5. A validated fabrication detector, and the finding that a naive dishonest
+   debater's fabrication rate cannot be cleanly distinguished from an honest
+   one's, though fabrication does not appear to pay.
 
 ---
 
@@ -207,25 +208,25 @@ non-significant result is support.
 
 | hypothesis | diff | z | p | outcome |
 |---|---|---|---|---|
-| H1 debate > direct (NONE) | +0.206 | 5.38 | <0.0001 | **confirmed**, survives Holm |
-| H2 debate > consultancy (NONE) | +0.083 | 2.26 | 0.0241 | fails Holm |
-| H3 direct OBSCURED < NONE | -0.090 | -2.19 | 0.0282 | **fails** |
-| H4 lift preserved (diff-in-diff) | -0.020 | -0.36 | 0.7190 | **supported** |
-| H5 debate = direct (FULL) | +0.013 | 0.43 | 0.6691 | **supported** |
+| H1 debate > direct (NONE) | +0.207 | 5.40 | <0.0001 | **confirmed**, survives Holm |
+| H2 debate > consultancy (NONE) | +0.083 | 2.24 | 0.0251 | fails Holm |
+| H3 direct OBSCURED < NONE | -0.090 | -2.21 | 0.0268 | **fails** |
+| H4 lift preserved (diff-in-diff) | -0.020 | -0.36 | 0.7178 | **supported** |
+| H5 debate = direct (FULL) | +0.013 | 0.44 | 0.6612 | **supported** |
 
 **Judge qwen2.5:3b**
 
 | hypothesis | diff | z | p | outcome |
 |---|---|---|---|---|
-| H1 debate > direct (NONE) | +0.243 | 6.35 | <0.0001 | **confirmed**, survives Holm |
-| H2 debate > consultancy (NONE) | +0.116 | 3.09 | 0.0020 | **confirmed**, survives Holm |
-| H3 direct OBSCURED < NONE | -0.067 | -1.63 | 0.1023 | **fails** |
-| H4 lift preserved (diff-in-diff) | -0.063 | -1.13 | 0.2571 | **supported** |
-| H5 debate = direct (FULL) | +0.030 | 1.01 | 0.3130 | **supported** |
+| H1 debate > direct (NONE) | +0.243 | 6.38 | <0.0001 | **confirmed**, survives Holm |
+| H2 debate > consultancy (NONE) | +0.117 | 3.13 | 0.0018 | **confirmed**, survives Holm |
+| H3 direct OBSCURED < NONE | -0.067 | -1.64 | 0.1013 | **fails** |
+| H4 lift preserved (diff-in-diff) | -0.063 | -1.15 | 0.2521 | **supported** |
+| H5 debate = direct (FULL) | +0.030 | 1.02 | 0.3096 | **supported** |
 
 ### 5.3 H1 and H5: the rig behaves at both ends
 
-Debate beats direct judging by 20.6 and 24.3 points under information asymmetry,
+Debate beats direct judging by 20.7 and 24.3 points under information asymmetry,
 replicating the established result at high significance on both judges. Under
 `FULL`, debate's advantage disappears (+0.013 and +0.030, both non-significant).
 
@@ -239,8 +240,8 @@ Debate's advantage over direct judging, computed within access level:
 
 | judge | lift under NONE | lift under OBSCURED | difference | p |
 |---|---|---|---|---|
-| qwen2.5:7b | +0.206 | +0.186 | -0.020 | 0.719 |
-| qwen2.5:3b | +0.243 | +0.180 | -0.063 | 0.257 |
+| qwen2.5:7b | +0.207 | +0.187 | -0.020 | 0.718 |
+| qwen2.5:3b | +0.243 | +0.180 | -0.063 | 0.252 |
 
 The lift under an unreadable source is statistically indistinguishable from the
 lift under no source, on both judges. In balanced-accuracy terms (section 6.1) the
@@ -256,7 +257,7 @@ this condition quote verification is impossible by construction.
 We predicted that an unreadable source would be *worse* than no source, on the
 intuition that illegible material actively misleads. Direct judging did fall, by
 9.0 and 6.7 points, in the predicted direction on both judges. Neither survives
-Holm correction (p = 0.0282 and p = 0.1023).
+Holm correction (p = 0.0268 and p = 0.1013).
 
 **We report H3 as failed.** The preregistration commits us to this: "If direct
 judging under OBSCURED is statistically indistinguishable from NONE, H3 fails and
@@ -388,15 +389,27 @@ Detector sensitivity, against corrupted known-grounded quotes:
 We therefore report the **excess** of the dishonest rate over the honest rate,
 both carrying the same loose-quoting baseline.
 
-| | rate |
-|---|---|
-| honest debater | 0.122 |
-| dishonest debater | 0.141 |
-| excess | +0.019 (se 0.027, z = 0.71) |
+Debaters never see the judge and are the same model in every cell, so the two
+`debate/obscured` runs are two independent samples of one process. They do not
+agree well, and we report both rather than pick one.
 
-**Naive dishonest debaters do not fabricate more than honest ones**, and
-fabrication did not pay: the dishonest debater won 0.33 of the time when it
-fabricated and 0.37 when it did not.
+| run | honest | dishonest | excess | z |
+|---|---|---|---|---|
+| debate/obscured, 7b matrix | 0.122 | 0.141 | +0.019 | 0.71 |
+| debate/obscured, 3b matrix | 0.113 | 0.173 | +0.060 | 2.13 |
+| **pooled** | **0.117** | **0.157** | **+0.040** | **2.02** (p = 0.043) |
+
+Our first reading used a single run, showed no excess, and would have supported
+reporting that dishonest debaters do not fabricate more than honest ones. Pooled
+across both runs there is a small excess of about 4 points at p = 0.043. That is
+marginal, it does not survive correction for the several exploratory comparisons
+in this section, and the two runs straddle it. The honest summary is that **we
+cannot cleanly distinguish the dishonest fabrication rate from the honest one**,
+which is a weaker statement than saying they are the same.
+
+What is consistent across both runs is that fabrication did not pay. The
+dishonest debater won 0.33 of the time when it fabricated against 0.37 when it
+did not in the first run, and 0.33 against 0.38 in the second.
 
 The obvious caveat is that our debaters were never told the judge is blind. They
 were assigned a position and asked to argue it. Whether a debater informed of the

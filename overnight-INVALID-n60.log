@@ -1,0 +1,46 @@
+=== validation gate ===
+  -> worst overlap 0.00. PASS: cipher holds, judge cannot read the passage
+
+Summary
+  PASS  ollama/qwen2.5:7b
+  PASS  ollama/llama3.1:8b
+  PASS  ollama/gemma2:9b
+=== judge ollama/qwen2.5:7b ===
+[20:03:08] START ollama/qwen2.5:7b debate/none
+[20:12:42] DONE  ollama/qwen2.5:7b debate/none acc=0.717 se=0.059
+[20:12:42] START ollama/qwen2.5:7b direct/none
+[20:13:39] DONE  ollama/qwen2.5:7b direct/none acc=0.633 se=0.063
+[20:13:39] START ollama/qwen2.5:7b direct/obscured
+[20:15:32] DONE  ollama/qwen2.5:7b direct/obscured acc=0.483 se=0.065
+[20:15:32] START ollama/qwen2.5:7b debate/obscured
+[20:26:01] DONE  ollama/qwen2.5:7b debate/obscured acc=0.617 se=0.063
+[20:26:01] START ollama/qwen2.5:7b consultancy/none
+[20:30:56] DONE  ollama/qwen2.5:7b consultancy/none acc=0.617 se=0.063
+[20:30:56] START ollama/qwen2.5:7b consultancy/obscured
+[20:35:56] DONE  ollama/qwen2.5:7b consultancy/obscured acc=0.533 se=0.065
+[20:35:56] START ollama/qwen2.5:7b direct/full
+[20:37:11] DONE  ollama/qwen2.5:7b direct/full acc=0.783 se=0.054
+[20:37:11] START ollama/qwen2.5:7b debate/full
+[20:46:14] DONE  ollama/qwen2.5:7b debate/full acc=0.800 se=0.052
+[20:46:14] START ollama/qwen2.5:7b consultancy/full
+[20:51:12] DONE  ollama/qwen2.5:7b consultancy/full acc=0.767 se=0.055
+=== judge ollama/qwen2.5:3b ===
+[20:51:12] START ollama/qwen2.5:3b debate/none
+[21:00:23] DONE  ollama/qwen2.5:3b debate/none acc=0.633 se=0.063
+[21:00:23] START ollama/qwen2.5:3b direct/none
+[21:01:21] DONE  ollama/qwen2.5:3b direct/none acc=0.617 se=0.063
+[21:01:21] START ollama/qwen2.5:3b direct/obscured
+[21:02:26] DONE  ollama/qwen2.5:3b direct/obscured acc=0.483 se=0.065
+[21:02:26] START ollama/qwen2.5:3b debate/obscured
+[21:11:46] DONE  ollama/qwen2.5:3b debate/obscured acc=0.667 se=0.061
+[21:11:46] START ollama/qwen2.5:3b consultancy/none
+[21:16:28] DONE  ollama/qwen2.5:3b consultancy/none acc=0.667 se=0.061
+[21:16:28] START ollama/qwen2.5:3b consultancy/obscured
+[21:21:33] DONE  ollama/qwen2.5:3b consultancy/obscured acc=0.467 se=0.065
+[21:21:33] START ollama/qwen2.5:3b direct/full
+[21:22:35] DONE  ollama/qwen2.5:3b direct/full acc=0.800 se=0.052
+[21:22:35] START ollama/qwen2.5:3b debate/full
+[21:31:32] DONE  ollama/qwen2.5:3b debate/full acc=0.783 se=0.054
+[21:31:32] START ollama/qwen2.5:3b consultancy/full
+[21:36:20] DONE  ollama/qwen2.5:3b consultancy/full acc=0.833 se=0.049
+[21:36:20] ALL DONE

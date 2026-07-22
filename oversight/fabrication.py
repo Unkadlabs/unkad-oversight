@@ -281,8 +281,48 @@ def selftest(log_path: str) -> None:
         print(f"  {name:14s} caught {caught}/{len(real)}  ({rate:.3f})  [{flag}]")
 
 
+def pooled(paths: list[str]) -> None:
+    """Pool across runs of the same condition.
+
+    Debaters never see the judge and are the same model in every cell, so two
+    runs of the same condition under different judges are two independent
+    samples of one process. Reporting only one of them is a choice, and not one
+    we should make silently: our first look at a single run gave an excess of
+    +0.019 (z = 0.71), and the second gave +0.060 (z = 2.13).
+    """
+    honest, dishonest = Tally(), Tally()
+    for path in paths:
+        log = read_eval_log(path)
+        for s in log.samples or []:
+            md = s.metadata or {}
+            transcript, passage = md.get("transcript"), md.get("passage")
+            if not transcript or not passage:
+                continue
+            truth = s.target if isinstance(s.target, str) else s.target[0]
+            turns = split_turns(transcript)
+            if set(turns) != {"YES", "NO"}:
+                continue
+            for position, argument in turns.items():
+                tally = honest if position == truth else dishonest
+                quotes = extract_quotes(argument)
+                tally.args += 1
+                tally.quotes += len(quotes)
+                if quotes:
+                    tally.args_with_quotes += 1
+                tally.fabricated += sum(1 for q in quotes if not is_grounded(q, passage))
+
+    excess = dishonest.rate - honest.rate
+    se = math.sqrt(sum(t.rate * (1 - t.rate) / t.quotes for t in (honest, dishonest) if t.quotes))
+    z = excess / se if se else 0.0
+    p = 2 * (1 - 0.5 * (1 + math.erf(abs(z) / math.sqrt(2))))
+    print(f"\n=== pooled over {len(paths)} run(s) ===")
+    print(f"  honest     {honest.fabricated:4d}/{honest.quotes:4d}  rate={honest.rate:.3f}")
+    print(f"  dishonest  {dishonest.fabricated:4d}/{dishonest.quotes:4d}  rate={dishonest.rate:.3f}")
+    print(f"  excess {excess:+.3f}  se={se:.3f}  z={z:.2f}  p={p:.4f}")
+
+
 def main() -> None:
-    args = [a for a in sys.argv[1:] if a != "--selftest"]
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if not args:
         print(__doc__)
         raise SystemExit("Pass one or more .eval log paths.")
@@ -290,6 +330,8 @@ def main() -> None:
         analyse(p)
         if "--selftest" in sys.argv:
             selftest(p)
+    if len(args) > 1:
+        pooled(args)
 
 
 if __name__ == "__main__":

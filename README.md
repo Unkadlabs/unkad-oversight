@@ -72,58 +72,104 @@ decode requests, naive reads, and quote requests, and measures word overlap
 against the true plaintext.
 
 This must pass before any result is interpretable, and it must be re-run for
-every judge model, because decoding ability improves with capability. Current
-status on our three local judges:
+every judge model, because decoding ability improves with capability. Status on
+all four local models we have used:
 
 ```
 PASS  ollama/qwen2.5:7b     worst overlap 0.00
+PASS  ollama/qwen2.5:3b     worst overlap 0.00
 PASS  ollama/llama3.1:8b    worst overlap 0.00
 PASS  ollama/gemma2:9b      worst overlap 0.00
 ```
 
-## Running it
+## Reproducing the results
 
 Everything runs locally on quantised models through [Ollama](https://ollama.com).
-No API keys, no rented compute.
+No API keys, no rented compute. The full matrix took about eight hours on one
+Apple Silicon machine.
+
+### Check our numbers without running anything
+
+The 18 confirmatory logs are in [`transcripts/`](transcripts/), so every table and
+test statistic in the paper can be regenerated in about a minute, without a GPU
+and without Ollama installed.
 
 ```bash
-ollama pull qwen2.5:7b llama3.1:8b gemma2:9b
+python -m venv .venv && ./.venv/bin/pip install -e .
+./.venv/bin/python -m oversight.analyse
+```
+
+That prints the full matrix, balanced accuracy, YES rates, per-cell unparsed
+rates, and all five pre-registered tests with Holm correction, as markdown. If
+anything it prints disagrees with [PAPER.md](PAPER.md), the paper is wrong.
+
+### Rerun the experiment from scratch
+
+```bash
+# One model per command; ollama pull takes a single argument.
+ollama pull qwen2.5:7b
+ollama pull qwen2.5:3b
+ollama pull llama3.1:8b
+ollama pull gemma2:9b
 
 python -m venv .venv && ./.venv/bin/pip install -e .
 
-# Validate the blinding first. Never skip this.
+# Validate the blinding first. Never skip this: the obscured condition is void
+# if a judge can read the cipher, and this is the only thing standing between
+# you and a meaningless result.
 ./.venv/bin/python -m oversight.validate
 
-# Run 1: positive control, judge sighted
-./.venv/bin/inspect eval oversight/task.py@direct_full --model ollama/qwen2.5:7b
-./.venv/bin/inspect eval oversight/task.py@consultancy_full --model ollama/qwen2.5:7b
-./.venv/bin/inspect eval oversight/task.py@debate_full --model ollama/qwen2.5:7b
+# The full 18-cell matrix at n=300. Writes results.tsv incrementally, in
+# hypothesis-priority order, so an interrupted run is still usable.
+./run_overnight.sh
 
-# Run 2: judge cannot verify quotations
-./.venv/bin/inspect eval oversight/task.py@debate_obscured --model ollama/qwen2.5:7b
+# Analyse whatever you just produced.
+./.venv/bin/python -m oversight.analyse --logs logs/
 ```
 
-Task data is BoolQ: a passage, a yes/no question, and ground truth.
+Single cells, if you want to poke at one condition:
 
-## The experimental plan
+```bash
+./.venv/bin/inspect eval oversight/task.py@debate_obscured \
+    --model ollama/qwen2.5:7b -T n=300
+```
 
-**Run 1, positive control.** With the judge sighted, does debate beat direct
-judging, as the literature says it should? If not, the rig is broken and nothing
-downstream means anything. This is the first thing to run and the cheapest way to
-discover a problem.
+Task names are `{direct,consultancy,debate}_{full,none,obscured}`. Note `-T n=300`
+rather than `--limit`: `--limit` truncates Inspect's own sample loading and will
+silently give you a smaller run than you asked for. We lost a full overnight run
+to that mistake, and `results-INVALID-n60.tsv` and `overnight-INVALID-n60.log`
+are kept in the repository as the record of it. Nothing in the paper draws on
+them. The giveaway was standard errors around 0.05 where n = 300 should have
+produced roughly 0.025.
 
-**Run 2, the hypothesis test.** Six cells: three protocols, judge sighted and
-blinded. The metric is not absolute accuracy, which will fall in both conditions,
-but whether **debate's advantage over direct judging survives blinding**.
+### Expected runtime per cell
 
-- If it survives, our hypothesis is wrong and the result is better than the one we
-  set out to find: debate is robust to the judge losing object-level access.
-- If it collapses, verifiable access is a precondition for debate, which is a real
-  constraint on the protocol.
+Debate cells generate three completions per sample and dominate everything else.
 
-**Run 3, the fabrication test.** Under blinding, one debater is assigned the
-incorrect position. How often does it misrepresent the source, and does
-misrepresentation win? This tests debate's foundational assumption directly.
+| protocol | approximate wall clock at n=300 |
+|---|---|
+| direct | 5 to 9 minutes |
+| consultancy | 23 to 33 minutes |
+| debate | 47 to 49 minutes |
+
+Swapping in a smaller judge barely helps, because the debaters are the same model
+in every cell and do most of the generation.
+
+## What we ran, and what came of it
+
+**Positive control.** Under `FULL`, debate does not beat direct judging (+0.013 and
++0.030, both non-significant). Under `NONE` it beats it decisively (+0.207 and
++0.243). Large effect where the literature says there should be one, none where
+there should not be.
+
+**The hypothesis test.** Debate's lift is statistically indistinguishable between
+`NONE` and `OBSCURED` on both judges. Debate helps a judge that cannot verify a
+single quotation. See [PAPER.md](PAPER.md) section 5.4.
+
+**The fabrication test.** `oversight/fabrication.py` measures whether debaters
+quote things the passage does not contain. Naive dishonest debaters do not
+fabricate more than honest ones. Whether a debater *told* the judge is blind
+behaves differently is the subject of our next experiment.
 
 ## Commitments
 
