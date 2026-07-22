@@ -12,7 +12,7 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://unkad.com"
-Repository = "https://github.com/unkadlabs/unkad-oversight"
+Repository = "https://github.com/Unkadlabs/unkad-oversight"
 
 [build-system]
 requires = ["setuptools>=68"]
