@@ -474,11 +474,14 @@ python -m venv .venv && ./.venv/bin/pip install -e .
 
 ./.venv/bin/python -m oversight.validate      # blinding gate, never skip
 ./run_overnight.sh                            # full 18-cell matrix
-./.venv/bin/python -m oversight.fabrication --selftest logs/<debate-obscured>.eval
+./.venv/bin/python -m oversight.fabrication --selftest transcripts/*debate-obscured*.eval
 ```
 
-Per-cell results in `results.tsv`. Full transcripts, judge decisions, and
-per-sample scores in `logs/`. Prompts in `oversight/protocols.py`, unmodified
+Per-cell results in `results.tsv`. The 18 confirmatory transcripts, with full
+debate text, judge prompts, completions, and per-sample scores, are in
+[`transcripts/`](transcripts/), each matched to its `results.tsv` row by exact
+accuracy. See [`transcripts/README.md`](transcripts/README.md) for why that
+directory is separate from Inspect's working `logs/`. Prompts in `oversight/protocols.py`, unmodified
 between the pilot and the confirmatory run.
 
 ## License
