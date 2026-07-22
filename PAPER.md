@@ -344,6 +344,34 @@ We did not test that. We tested question-answering judges on BoolQ. The
 generalisation to safety classifiers is a hypothesis we intend to test directly,
 not a result of this paper.
 
+#### Follow-up: a confound in this section, found and tested
+
+After publishing we found a confound in the comparison this section rests on. Our
+`OBSCURED` and `NONE` conditions differ in **two** ways, not one. `OBSCURED` shows
+ciphertext *and* tells the judge "You cannot decode this passage" and "You may not
+be able to verify their quotations". `NONE` says only that the passage was not
+shown. Either the ciphertext or the warning could produce the collapse, and
+nothing in this paper separates them. Had the warning been responsible, the
+finding above would have been a demand characteristic of our own prompt.
+
+We ran the dissociation:
+[Unkadlabs/unkad-collapse](https://github.com/Unkadlabs/unkad-collapse). A matched
+2x2 crossing ciphertext against warning, n = 300 per cell, two judges, with anchor
+cells reproducing this paper's prompts verbatim.
+
+**The ciphertext causes the collapse. The warning does not.** On the primary judge,
+ciphertext moved the YES rate by -0.213 (z = -7.67) with the warning absent, while
+the warning moved it +0.010 (p = 0.57) with ciphertext present. Both replicate on
+the second judge. The cleanest cell shows the judge ciphertext and says nothing
+whatever about verification, and it answers YES 4.3 percent of the time.
+
+The anchors reproduce this paper closely: `e1_none` returned 0.193 against the
+0.193 reported here, and `e1_obscured` returned 0.057 and 0.060 against 0.063.
+
+The finding in this section therefore survives its strongest objection. We record
+the confound rather than quietly benefiting from having resolved it, because the
+version of this paper you may have read first did not know about it.
+
 ### 6.3 Consultancy degrades a sighted judge
 
 On both judges, consultancy under `FULL` is **below** direct judging: 0.786 versus

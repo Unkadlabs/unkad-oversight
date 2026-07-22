@@ -18,6 +18,13 @@ research laboratory in Mogadishu.
 > toward rejection rather than uncertainty, answering YES 6 percent of the time on
 > a task that is YES 62 percent of the time, and so scoring 1.000 on the
 > reject-correct half of the data.
+>
+> **Follow-up.** We later found a confound in that rejection result: our OBSCURED
+> condition both showed ciphertext and warned the judge it could not verify
+> quotations, so either could have caused the collapse. We tested the
+> dissociation in [unkad-collapse](https://github.com/Unkadlabs/unkad-collapse).
+> The ciphertext causes it (z = -7.7); the warning does not (p = 0.57). The
+> finding stands. See PAPER.md section 6.2.
 
 ## The question
 
