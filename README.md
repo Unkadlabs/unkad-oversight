@@ -7,9 +7,17 @@ Built on [Inspect](https://inspect.aisi.org.uk/), the evaluation framework from
 the UK AI Security Institute. By [Unkad Labs](https://unkad.com), a non-profit AI
 research laboratory in Mogadishu.
 
-> Status: early. The protocols run and the validation checks pass. No results yet.
-> This repository is being developed in the open, so what is here is the rig, not
-> a finding.
+> **Results are in.** The full pre-registered matrix has run: 3 protocols x 3
+> access levels x 2 judges, n = 300 per cell, 5,400 judgements. Read
+> **[PAPER.md](PAPER.md)**. The analysis plan was fixed in
+> [PREREGISTRATION.md](PREREGISTRATION.md) before the confirmatory run.
+>
+> Headline: **debate's advantage over direct judging survives the judge losing the
+> ability to verify quotations.** One pre-registered hypothesis failed and is
+> reported as failed. Separately, judges shown a source they cannot read collapse
+> toward rejection rather than uncertainty, answering YES 6 percent of the time on
+> a task that is YES 62 percent of the time, and so scoring 1.000 on the
+> reject-correct half of the data.
 
 ## The question
 

@@ -26,7 +26,7 @@ run_cell () {
 
   local raw
   raw=$("$PY/inspect" eval "oversight/task.py@${task}" \
-          --model "$judge" --limit "$N" 2>&1) || true
+          --model "$judge" -T n="$N" 2>&1) || true
 
   local acc se
   acc=$(echo "$raw" | grep -E '^accuracy' | awk '{print $2}' | head -1)

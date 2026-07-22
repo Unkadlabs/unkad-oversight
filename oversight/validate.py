@@ -65,7 +65,12 @@ async def check(model_name: str) -> bool:
 
 async def main() -> None:
     os.environ.setdefault("OPENAI_API_KEY", "ollama")
-    models = ["ollama/qwen2.5:7b", "ollama/llama3.1:8b", "ollama/gemma2:9b"]
+    models = [
+        "ollama/qwen2.5:7b",  # primary judge
+        "ollama/qwen2.5:3b",  # secondary judge, robustness check
+        "ollama/llama3.1:8b",
+        "ollama/gemma2:9b",
+    ]
     results = {m: await check(m) for m in models}
     print("\nSummary")
     for m, ok in results.items():
