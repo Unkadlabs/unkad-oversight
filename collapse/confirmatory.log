@@ -1,0 +1,30 @@
+=== replication tests (prompts must match experiment 1) ===
+........                                                                 [100%]
+8 passed in 0.00s
+=== judge ollama/qwen2.5:7b ===
+[14:40:45] START ollama/qwen2.5:7b cipher_neutral
+[14:46:58] DONE  ollama/qwen2.5:7b cipher_neutral yes= acc=0.427
+[14:46:58] START ollama/qwen2.5:7b absent_warned
+[14:51:18] DONE  ollama/qwen2.5:7b absent_warned yes= acc=0.550
+[14:51:18] START ollama/qwen2.5:7b cipher_warned
+[14:56:08] DONE  ollama/qwen2.5:7b cipher_warned yes= acc=0.430
+[14:56:08] START ollama/qwen2.5:7b absent_neutral
+[15:00:09] DONE  ollama/qwen2.5:7b absent_neutral yes= acc=0.580
+[15:00:09] START ollama/qwen2.5:7b e1_obscured
+[15:08:20] DONE  ollama/qwen2.5:7b e1_obscured yes= acc=0.433
+[15:08:20] START ollama/qwen2.5:7b e1_none
+[15:12:38] DONE  ollama/qwen2.5:7b e1_none yes= acc=0.510
+=== judge ollama/qwen2.5:3b ===
+[15:12:38] START ollama/qwen2.5:3b cipher_neutral
+[15:19:53] DONE  ollama/qwen2.5:3b cipher_neutral yes= acc=0.420
+[15:19:53] START ollama/qwen2.5:3b absent_warned
+[15:24:28] DONE  ollama/qwen2.5:3b absent_warned yes= acc=0.543
+[15:24:28] START ollama/qwen2.5:3b cipher_warned
+[15:29:30] DONE  ollama/qwen2.5:3b cipher_warned yes= acc=0.437
+[15:29:30] START ollama/qwen2.5:3b absent_neutral
+[15:33:38] DONE  ollama/qwen2.5:3b absent_neutral yes= acc=0.583
+[15:33:38] START ollama/qwen2.5:3b e1_obscured
+[15:41:40] DONE  ollama/qwen2.5:3b e1_obscured yes= acc=0.443
+[15:41:40] START ollama/qwen2.5:3b e1_none
+[15:46:11] DONE  ollama/qwen2.5:3b e1_none yes= acc=0.543
+[15:46:11] START ollama/qwen2.5:3b cipher_warned

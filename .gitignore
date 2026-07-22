@@ -7,3 +7,7 @@ notes/
 
 # Confirmatory transcripts are tracked (see transcripts/README.md).
 !transcripts/
+
+# Experiment 2 working logs
+collapse/logs/
+collapse/logs-carryover/
